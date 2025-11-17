@@ -1,0 +1,1088 @@
+<!doctype html>
+<html lang="id">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AlgeSmart - Belajar SPLTV</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="/_sdk/data_sdk.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    html {
+      height: 100%;
+    }
+    .gradient-bg {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    .card-hover {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+    .fade-in {
+      animation: fadeIn 0.5s ease-in;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .step-item {
+      position: relative;
+      padding-left: 2rem;
+      margin-bottom: 1.5rem;
+    }
+    .step-item::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.5rem;
+      width: 1.5rem;
+      height: 1.5rem;
+      border-radius: 50%;
+      background: #667eea;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 0.875rem;
+    }
+    .loading-spinner {
+      border: 3px solid #f3f4f6;
+      border-top: 3px solid #667eea;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      animation: spin 1s linear infinite;
+      display: inline-block;
+      margin-left: 8px;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+ </head>
+ <body>
+  <div id="app" class="min-h-full flex flex-col"><!-- Header -->
+   <header class="gradient-bg text-white shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 py-4">
+     <div class="flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+       <div class="text-3xl">
+        📐
+       </div>
+       <div>
+        <h1 id="app-title" class="text-2xl font-bold">AlgeSmart</h1>
+        <p id="tagline" class="text-sm opacity-90">Belajar SPLTV Jadi Mudah!</p>
+       </div>
+      </div>
+      <nav class="hidden md:flex space-x-6"><button onclick="showSection('home')" class="hover:opacity-80 transition">Beranda</button> <button onclick="showSection('materi')" class="hover:opacity-80 transition">📚 Materi</button> <button onclick="showSection('kalkulator')" class="hover:opacity-80 transition">💻 Kalkulator</button> <button onclick="showSection('latihan')" class="hover:opacity-80 transition">🧮 Latihan</button> <button onclick="showSection('statistik')" class="hover:opacity-80 transition">📊 Statistik</button>
+      </nav><button onclick="toggleMobileMenu()" class="md:hidden text-2xl">☰</button>
+     </div>
+     <div id="mobile-menu" class="hidden mt-4 space-y-2"><button onclick="showSection('home')" class="block w-full text-left py-2 hover:bg-white hover:bg-opacity-10 rounded px-3">Beranda</button> <button onclick="showSection('materi')" class="block w-full text-left py-2 hover:bg-white hover:bg-opacity-10 rounded px-3">📚 Materi</button> <button onclick="showSection('kalkulator')" class="block w-full text-left py-2 hover:bg-white hover:bg-opacity-10 rounded px-3">💻 Kalkulator</button> <button onclick="showSection('latihan')" class="block w-full text-left py-2 hover:bg-white hover:bg-opacity-10 rounded px-3">🧮 Latihan</button> <button onclick="showSection('statistik')" class="block w-full text-left py-2 hover:bg-white hover:bg-opacity-10 rounded px-3">📊 Statistik</button>
+     </div>
+    </div>
+   </header><!-- Main Content -->
+   <main class="flex-1 bg-gray-50"><!-- Home Section -->
+    <section id="home-section" class="py-12">
+     <div class="max-w-7xl mx-auto px-4">
+      <div class="text-center mb-12 fade-in">
+       <div class="text-8xl mb-6">
+        🎓
+       </div>
+       <h2 class="text-4xl font-bold text-gray-800 mb-4">Selamat Datang di AlgeSmart!</h2>
+       <p class="text-xl text-gray-600 mb-8">Platform pembelajaran interaktif untuk menguasai Sistem Persamaan Linear Tiga Variabel</p><button id="cta-button" onclick="showSection('materi')" class="bg-purple-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-purple-700 transition shadow-lg"> Mulai Belajar Sekarang </button>
+      </div>
+      <div class="grid md:grid-cols-3 gap-6 mt-12">
+       <div class="bg-white p-6 rounded-xl shadow-md card-hover cursor-pointer" onclick="showSection('materi')">
+        <div class="text-4xl mb-4">
+         🧩
+        </div>
+        <h3 class="text-xl font-bold text-gray-800 mb-2">Materi Interaktif</h3>
+        <p class="text-gray-600">Pelajari konsep SPLTV dengan penjelasan visual yang mudah dipahami</p>
+       </div>
+       <div class="bg-white p-6 rounded-xl shadow-md card-hover cursor-pointer" onclick="showSection('kalkulator')">
+        <div class="text-4xl mb-4">
+         💻
+        </div>
+        <h3 class="text-xl font-bold text-gray-800 mb-2">Kalkulator SPLTV</h3>
+        <p class="text-gray-600">Selesaikan persamaan otomatis dan lihat langkah-langkahnya</p>
+       </div>
+       <div class="bg-white p-6 rounded-xl shadow-md card-hover cursor-pointer" onclick="showSection('latihan')">
+        <div class="text-4xl mb-4">
+         🧮
+        </div>
+        <h3 class="text-xl font-bold text-gray-800 mb-2">Latihan &amp; Kuis</h3>
+        <p class="text-gray-600">Uji pemahamanmu dengan soal-soal interaktif</p>
+       </div>
+      </div>
+     </div>
+    </section><!-- Materi Section -->
+    <section id="materi-section" class="hidden py-12">
+     <div class="max-w-4xl mx-auto px-4">
+      <h2 class="text-3xl font-bold text-gray-800 mb-8">📚 Materi &amp; Teori SPLTV</h2>
+      <div class="bg-white rounded-xl shadow-md p-6 mb-6">
+       <h3 class="text-2xl font-bold text-purple-600 mb-4">Apa itu SPLTV?</h3>
+       <p class="text-gray-700 mb-4">Sistem Persamaan Linear Tiga Variabel (SPLTV) adalah sistem yang terdiri dari tiga persamaan linear dengan tiga variabel (biasanya x, y, dan z).</p>
+       <div class="bg-purple-50 p-4 rounded-lg mb-4">
+        <p class="font-mono text-center">ax + by + cz = d</p>
+        <p class="font-mono text-center">ex + fy + gz = h</p>
+        <p class="font-mono text-center">ix + jy + kz = l</p>
+       </div>
+       <h4 class="font-bold text-lg text-gray-800 mb-3">🔍 Karakteristik SPLTV:</h4>
+       <ul class="space-y-2 text-gray-700 mb-4">
+        <li class="flex items-start"><span class="mr-2">✓</span> <span>Memiliki <strong>tiga variabel</strong> yang tidak diketahui (x, y, z)</span></li>
+        <li class="flex items-start"><span class="mr-2">✓</span> <span>Setiap persamaan berbentuk <strong>linear</strong> (pangkat tertinggi = 1)</span></li>
+        <li class="flex items-start"><span class="mr-2">✓</span> <span>Minimal diperlukan <strong>3 persamaan</strong> untuk menemukan solusi unik</span></li>
+        <li class="flex items-start"><span class="mr-2">✓</span> <span>Solusi berupa <strong>tripel terurut</strong> (x, y, z)</span></li>
+       </ul>
+       <h4 class="font-bold text-lg text-gray-800 mb-3">📌 Contoh Penerapan dalam Kehidupan:</h4>
+       <div class="bg-blue-50 p-4 rounded-lg">
+        <p class="text-gray-700 mb-2"><strong>Soal:</strong> Andi membeli 2 buku, 3 pensil, dan 1 penghapus seharga Rp15.000. Budi membeli 1 buku, 2 pensil, dan 2 penghapus seharga Rp12.000. Citra membeli 3 buku, 1 pensil, dan 1 penghapus seharga Rp14.000. Berapa harga masing-masing barang?</p>
+        <p class="text-gray-600 text-sm mt-2">Dengan SPLTV, kita bisa menemukan harga buku (x), pensil (y), dan penghapus (z)!</p>
+       </div>
+      </div>
+      <div class="bg-white rounded-xl shadow-md p-6 mb-6">
+       <h3 class="text-2xl font-bold text-purple-600 mb-4">📘 Contoh Soal</h3>
+       <p class="text-gray-700 mb-4">Selesaikan sistem persamaan berikut:</p>
+       <div class="bg-gray-50 p-4 rounded-lg mb-4">
+        <p class="font-mono">2x + y - z = 5 ... (1)</p>
+        <p class="font-mono">x - y + 2z = 1 ... (2)</p>
+        <p class="font-mono">3x + 2y + z = 11 ... (3)</p>
+       </div>
+       <div class="flex flex-wrap gap-3 mb-4"><button onclick="toggleExplanation('eliminasi')" class="bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700 transition"> 📝 Metode Eliminasi </button> <button onclick="toggleExplanation('substitusi')" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition"> 🔄 Metode Substitusi </button> <button onclick="toggleExplanation('campuran')" class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition"> 🎯 Metode Campuran </button>
+       </div><!-- Metode Eliminasi -->
+       <div id="explanation-eliminasi" class="hidden mt-4 bg-purple-50 p-4 rounded-lg">
+        <h4 class="font-bold text-lg mb-3 text-purple-800">📝 Metode Eliminasi</h4>
+        <div class="space-y-3 text-gray-700">
+         <div class="bg-white p-3 rounded"><strong>Langkah 1:</strong> Eliminasi z dari persamaan (1) dan (2) 
+          <div class="ml-4 mt-2 font-mono text-sm">
+           <p>2x + y - z = 5 | ×2 → 4x + 2y - 2z = 10</p>
+           <p>x - y + 2z = 1 | ×1 → x - y + 2z = 1</p>
+           <p class="border-t border-gray-300 mt-1 pt-1">Jumlahkan: 5x + y = 11 ... (4)</p>
+          </div>
+         </div>
+         <div class="bg-white p-3 rounded"><strong>Langkah 2:</strong> Eliminasi z dari persamaan (2) dan (3) 
+          <div class="ml-4 mt-2 font-mono text-sm">
+           <p>x - y + 2z = 1 | ×1 → x - y + 2z = 1</p>
+           <p>3x + 2y + z = 11 | ×2 → 6x + 4y + 2z = 22</p>
+           <p class="border-t border-gray-300 mt-1 pt-1">Kurangkan: -5x - 5y = -21 → x + y = 4.2 ... (5)</p>
+          </div>
+         </div>
+         <div class="bg-white p-3 rounded"><strong>Langkah 3:</strong> Eliminasi y dari persamaan (4) dan (5) 
+          <div class="ml-4 mt-2 font-mono text-sm">
+           <p>5x + y = 11</p>
+           <p>x + y = 4.2</p>
+           <p class="border-t border-gray-300 mt-1 pt-1">Kurangkan: 4x = 6.8 → x = 1.7</p>
+          </div>
+         </div>
+         <div class="bg-white p-3 rounded"><strong>Langkah 4:</strong> Substitusi x = 1.7 ke persamaan (5) 
+          <div class="ml-4 mt-2 font-mono text-sm">
+           <p>1.7 + y = 4.2 → y = 2.5</p>
+          </div>
+         </div>
+         <div class="bg-white p-3 rounded"><strong>Langkah 5:</strong> Substitusi x dan y ke persamaan (1) 
+          <div class="ml-4 mt-2 font-mono text-sm">
+           <p>2(1.7) + 2.5 - z = 5</p>
+           <p>3.4 + 2.5 - z = 5 → z = 0.9</p>
+          </div>
+         </div>
+        </div>
+        <div class="mt-4 p-3 bg-green-100 rounded"><strong>Hasil:</strong> x = 1.7, y = 2.5, z = 0.9
+        </div>
+       </div><!-- Metode Substitusi -->
+       <div id="explanation-substitusi" class="hidden mt-4 bg-blue-50 p-4 rounded-lg">
+        <h4 class="font-bold text-lg mb-3 text-blue-800">🔄 Metode Substitusi</h4>
+        <div class="space-y-3 text-gray-700">
+         <div class="bg-white p-3 rounded"><strong>Langkah 1:</strong> Dari persamaan (2), nyatakan x dalam y dan z 
+          <div class="ml-4 mt-2 font-mono text-sm">
+           <p>x - y + 2z = 1</p>
+           <p>x = 1 + y - 2z ... (4)</p>
+          </div>
+         </div>
+         <div class="bg-white p-3 rounded"><strong>Langkah 2:</strong> Substitusi (4) ke persamaan (1) 
+          <div class="ml-4 mt-2 font-mono text-sm">
+           <p>2(1 + y - 2z) + y - z = 5</p>
+           <p>2 + 2y - 4z + y - z = 5</p>
+           <p>3y - 5z = 3 ... (5)</p>
+          </div>
+         </div>
+         <div class="bg-white p-3 rounded"><strong>Langkah 3:</strong> Substitusi (4) ke persamaan (3) 
+          <div class="ml-4 mt-2 font-mono text-sm">
+           <p>3(1 + y - 2z) + 2y + z = 11</p>
+           <p>3 + 3y - 6z + 2y + z = 11</p>
+           <p>5y - 5z = 8 ... (6)</p>
+          </div>
+         </div>
+         <div class="bg-white p-3 rounded"><strong>Langkah 4:</strong> Dari (5): y = (3 + 5z)/3, substitusi ke (6) 
+          <div class="ml-4 mt-2 font-mono text-sm">
+           <p>5((3 + 5z)/3) - 5z = 8</p>
+           <p>(15 + 25z)/3 - 5z = 8</p>
+           <p>15 + 25z - 15z = 24</p>
+           <p>10z = 9 → z = 0.9</p>
+          </div>
+         </div>
+         <div class="bg-white p-3 rounded"><strong>Langkah 5:</strong> Substitusi z ke (5) dan (4) 
+          <div class="ml-4 mt-2 font-mono text-sm">
+           <p>3y - 5(0.9) = 3 → y = 2.5</p>
+           <p>x = 1 + 2.5 - 2(0.9) → x = 1.7</p>
+          </div>
+         </div>
+        </div>
+        <div class="mt-4 p-3 bg-green-100 rounded"><strong>Hasil:</strong> x = 1.7, y = 2.5, z = 0.9
+        </div>
+       </div><!-- Metode Campuran -->
+       <div id="explanation-campuran" class="hidden mt-4 bg-green-50 p-4 rounded-lg">
+        <h4 class="font-bold text-lg mb-3 text-green-800">🎯 Metode Campuran (Eliminasi + Substitusi)</h4>
+        <div class="space-y-3 text-gray-700">
+         <div class="bg-white p-3 rounded"><strong>Langkah 1:</strong> Eliminasi y dari persamaan (1) dan (2) 
+          <div class="ml-4 mt-2 font-mono text-sm">
+           <p>2x + y - z = 5</p>
+           <p>x - y + 2z = 1</p>
+           <p class="border-t border-gray-300 mt-1 pt-1">Jumlahkan: 3x + z = 6 ... (4)</p>
+          </div>
+         </div>
+         <div class="bg-white p-3 rounded"><strong>Langkah 2:</strong> Eliminasi y dari persamaan (1) dan (3) 
+          <div class="ml-4 mt-2 font-mono text-sm">
+           <p>2x + y - z = 5 | ×2 → 4x + 2y - 2z = 10</p>
+           <p>3x + 2y + z = 11 | ×1 → 3x + 2y + z = 11</p>
+           <p class="border-t border-gray-300 mt-1 pt-1">Kurangkan: x - 3z = -1 ... (5)</p>
+          </div>
+         </div>
+         <div class="bg-white p-3 rounded"><strong>Langkah 3:</strong> Dari (5), nyatakan x dalam z (Substitusi) 
+          <div class="ml-4 mt-2 font-mono text-sm">
+           <p>x = 3z - 1 ... (6)</p>
+          </div>
+         </div>
+         <div class="bg-white p-3 rounded"><strong>Langkah 4:</strong> Substitusi (6) ke (4) 
+          <div class="ml-4 mt-2 font-mono text-sm">
+           <p>3(3z - 1) + z = 6</p>
+           <p>9z - 3 + z = 6</p>
+           <p>10z = 9 → z = 0.9</p>
+          </div>
+         </div>
+         <div class="bg-white p-3 rounded"><strong>Langkah 5:</strong> Substitusi z ke (6) dan persamaan (1) 
+          <div class="ml-4 mt-2 font-mono text-sm">
+           <p>x = 3(0.9) - 1 = 1.7</p>
+           <p>2(1.7) + y - 0.9 = 5 → y = 2.5</p>
+          </div>
+         </div>
+        </div>
+        <div class="mt-4 p-3 bg-green-100 rounded"><strong>Hasil:</strong> x = 1.7, y = 2.5, z = 0.9
+        </div>
+       </div>
+      </div>
+      <div class="bg-white rounded-xl shadow-md p-6">
+       <h3 class="text-2xl font-bold text-purple-600 mb-4">🎯 Metode Penyelesaian</h3>
+       <div class="space-y-3">
+        <div class="p-4 bg-yellow-50 rounded-lg"><strong>1. Metode Eliminasi:</strong> Menghilangkan satu variabel dengan menjumlahkan atau mengurangkan persamaan
+        </div>
+        <div class="p-4 bg-green-50 rounded-lg"><strong>2. Metode Substitusi:</strong> Menyatakan satu variabel dalam variabel lain, lalu menggantikannya
+        </div>
+        <div class="p-4 bg-blue-50 rounded-lg"><strong>3. Metode Campuran:</strong> Kombinasi eliminasi dan substitusi untuk efisiensi
+        </div>
+       </div>
+      </div>
+     </div>
+    </section><!-- Kalkulator Section -->
+    <section id="kalkulator-section" class="hidden py-12">
+     <div class="max-w-4xl mx-auto px-4">
+      <h2 class="text-3xl font-bold text-gray-800 mb-8">💻 Kalkulator SPLTV</h2>
+      <div class="bg-white rounded-xl shadow-md p-6">
+       <p class="text-gray-600 mb-4">Masukkan koefisien untuk tiga persamaan linear:</p>
+       <div class="bg-purple-50 p-4 rounded-lg mb-6">
+        <p class="font-mono text-center text-sm mb-1">ax + by + cz = d</p>
+        <p class="font-mono text-center text-sm mb-1">ex + fy + gz = h</p>
+        <p class="font-mono text-center text-sm">ix + jy + kz = l</p>
+       </div>
+       <div class="space-y-4 mb-6">
+        <div class="grid grid-cols-4 gap-3 items-center"><input type="number" id="a1" placeholder="a" class="border border-gray-300 rounded px-3 py-2 text-center"> <input type="number" id="b1" placeholder="b" class="border border-gray-300 rounded px-3 py-2 text-center"> <input type="number" id="c1" placeholder="c" class="border border-gray-300 rounded px-3 py-2 text-center"> <input type="number" id="d1" placeholder="= d" class="border border-gray-300 rounded px-3 py-2 text-center">
+        </div>
+        <div class="grid grid-cols-4 gap-3 items-center"><input type="number" id="a2" placeholder="e" class="border border-gray-300 rounded px-3 py-2 text-center"> <input type="number" id="b2" placeholder="f" class="border border-gray-300 rounded px-3 py-2 text-center"> <input type="number" id="c2" placeholder="g" class="border border-gray-300 rounded px-3 py-2 text-center"> <input type="number" id="d2" placeholder="= h" class="border border-gray-300 rounded px-3 py-2 text-center">
+        </div>
+        <div class="grid grid-cols-4 gap-3 items-center"><input type="number" id="a3" placeholder="i" class="border border-gray-300 rounded px-3 py-2 text-center"> <input type="number" id="b3" placeholder="j" class="border border-gray-300 rounded px-3 py-2 text-center"> <input type="number" id="c3" placeholder="k" class="border border-gray-300 rounded px-3 py-2 text-center"> <input type="number" id="d3" placeholder="= l" class="border border-gray-300 rounded px-3 py-2 text-center">
+        </div>
+       </div><button onclick="calculateSPLTV()" class="w-full bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition font-semibold"> Hitung Solusi </button>
+       <div id="calc-result" class="hidden mt-6 p-6 bg-green-50 rounded-lg">
+        <h3 class="text-xl font-bold text-green-800 mb-4">✅ Hasil Perhitungan:</h3>
+        <div class="space-y-2 text-lg mb-4">
+         <p><strong>x =</strong> <span id="result-x"></span></p>
+         <p><strong>y =</strong> <span id="result-y"></span></p>
+         <p><strong>z =</strong> <span id="result-z"></span></p>
+        </div>
+        <div class="mb-4"><label class="block text-sm font-semibold mb-2 text-gray-700">Pilih Metode Penyelesaian:</label>
+         <div class="flex flex-wrap gap-2"><button onclick="showMethodSteps('eliminasi')" class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition text-sm"> 📝 Eliminasi </button> <button onclick="showMethodSteps('substitusi')" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition text-sm"> 🔄 Substitusi </button> <button onclick="showMethodSteps('campuran')" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition text-sm"> 🎯 Campuran </button>
+         </div>
+        </div>
+        <div id="solution-steps" class="hidden mt-4 bg-white p-4 rounded-lg">
+         <h4 class="font-bold text-gray-800 mb-3" id="method-title">Langkah-langkah Penyelesaian:</h4>
+         <div id="steps-content" class="space-y-3 text-sm text-gray-700"></div>
+        </div>
+       </div>
+       <div id="calc-error" class="hidden mt-6 p-6 bg-red-50 rounded-lg">
+        <h3 class="text-xl font-bold text-red-800 mb-2">❌ Error</h3>
+        <p class="text-red-700" id="error-message"></p>
+       </div>
+      </div>
+     </div>
+    </section><!-- Latihan Section -->
+    <section id="latihan-section" class="hidden py-12">
+     <div class="max-w-4xl mx-auto px-4">
+      <h2 class="text-3xl font-bold text-gray-800 mb-8">🧮 Latihan &amp; Kuis Interaktif</h2>
+      <div class="bg-white rounded-xl shadow-md p-6 mb-6">
+       <h3 class="text-xl font-bold text-gray-800 mb-4">Pilih Tingkat Kesulitan:</h3>
+       <div class="grid md:grid-cols-3 gap-4"><button onclick="startQuiz('mudah')" class="bg-green-500 text-white px-6 py-4 rounded-lg hover:bg-green-600 transition font-semibold"> 😊 Mudah </button> <button onclick="startQuiz('sedang')" class="bg-yellow-500 text-white px-6 py-4 rounded-lg hover:bg-yellow-600 transition font-semibold"> 🤔 Sedang </button> <button onclick="startQuiz('sulit')" class="bg-red-500 text-white px-6 py-4 rounded-lg hover:bg-red-600 transition font-semibold"> 🔥 Sulit </button>
+       </div>
+      </div>
+      <div id="quiz-container" class="hidden bg-white rounded-xl shadow-md p-6">
+       <div class="mb-4"><span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-semibold" id="quiz-difficulty-badge"></span> <span class="float-right text-gray-600">Soal <span id="current-question">1</span> dari 5</span>
+       </div>
+       <div class="mb-6">
+        <h3 class="text-lg font-bold text-gray-800 mb-3">Selesaikan sistem persamaan berikut:</h3>
+        <div class="bg-gray-50 p-4 rounded-lg" id="quiz-question"></div>
+       </div>
+       <div class="space-y-3 mb-6">
+        <div><label class="block text-sm font-semibold mb-1">Nilai x:</label> <input type="number" id="answer-x" class="w-full border border-gray-300 rounded px-3 py-2" step="0.01">
+        </div>
+        <div><label class="block text-sm font-semibold mb-1">Nilai y:</label> <input type="number" id="answer-y" class="w-full border border-gray-300 rounded px-3 py-2" step="0.01">
+        </div>
+        <div><label class="block text-sm font-semibold mb-1">Nilai z:</label> <input type="number" id="answer-z" class="w-full border border-gray-300 rounded px-3 py-2" step="0.01">
+        </div>
+       </div><button onclick="checkAnswer()" id="submit-answer-btn" class="w-full bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition font-semibold"> Cek Jawaban </button>
+       <div id="answer-feedback" class="hidden mt-6"></div>
+      </div>
+     </div>
+    </section><!-- Statistik Section -->
+    <section id="statistik-section" class="hidden py-12">
+     <div class="max-w-4xl mx-auto px-4">
+      <h2 class="text-3xl font-bold text-gray-800 mb-8">📊 Statistik Kemajuan Belajar</h2>
+      <div class="grid md:grid-cols-3 gap-6 mb-8">
+       <div class="bg-white rounded-xl shadow-md p-6 text-center">
+        <div class="text-4xl mb-2">
+         📝
+        </div>
+        <div class="text-3xl font-bold text-purple-600" id="total-quizzes">
+         0
+        </div>
+        <p class="text-gray-600">Total Latihan</p>
+       </div>
+       <div class="bg-white rounded-xl shadow-md p-6 text-center">
+        <div class="text-4xl mb-2">
+         ⭐
+        </div>
+        <div class="text-3xl font-bold text-yellow-500" id="avg-score">
+         0%
+        </div>
+        <p class="text-gray-600">Skor Rata-rata</p>
+       </div>
+       <div class="bg-white rounded-xl shadow-md p-6 text-center">
+        <div class="text-4xl mb-2">
+         🎯
+        </div>
+        <div class="text-3xl font-bold text-green-600" id="total-correct">
+         0
+        </div>
+        <p class="text-gray-600">Jawaban Benar</p>
+       </div>
+      </div>
+      <div class="bg-white rounded-xl shadow-md p-6">
+       <div class="flex justify-between items-center mb-4">
+        <h3 class="text-xl font-bold text-gray-800">Riwayat Latihan</h3><button onclick="resetStatistics()" id="reset-btn" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition text-sm font-semibold"> 🗑️ Reset Riwayat </button>
+       </div>
+       <div id="quiz-history" class="space-y-3">
+        <p class="text-gray-500 text-center py-8">Belum ada riwayat latihan. Mulai berlatih sekarang!</p>
+       </div>
+      </div>
+     </div>
+    </section>
+   </main><!-- Footer -->
+   <footer class="bg-gray-800 text-white py-6">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+     <p id="footer-text">© 2025 AlgeSmart. Semua hak dilindungi.</p>
+     <div class="mt-3 space-x-4"><a href="#" class="hover:text-purple-400 transition">Facebook</a> <a href="#" class="hover:text-purple-400 transition">Instagram</a> <a href="#" class="hover:text-purple-400 transition">Twitter</a>
+     </div>
+    </div>
+   </footer>
+  </div>
+  <script>
+    const defaultConfig = {
+      app_title: "AlgeSmart",
+      tagline: "Belajar SPLTV Jadi Mudah!",
+      cta_button: "Mulai Belajar Sekarang",
+      footer_text: "© 2025 AlgeSmart. Semua hak dilindungi.",
+      background_color: "#f9fafb",
+      surface_color: "#ffffff",
+      text_color: "#1f2937",
+      primary_action_color: "#7c3aed",
+      secondary_action_color: "#667eea",
+      font_family: "Segoe UI",
+      font_size: 16
+    };
+
+    let currentQuizData = null;
+    let currentQuestionIndex = 0;
+    let currentDifficulty = '';
+    let quizAnswers = [];
+    let allQuizData = [];
+
+    const dataHandler = {
+      onDataChanged(data) {
+        allQuizData = data;
+        updateStatistics(data);
+      }
+    };
+
+    async function initApp() {
+      const initResult = await window.dataSdk.init(dataHandler);
+      if (!initResult.isOk) {
+        console.error("Failed to initialize data SDK");
+      }
+    }
+
+    async function onConfigChange(config) {
+      const customFont = config.font_family || defaultConfig.font_family;
+      const baseFontStack = 'Tahoma, Geneva, Verdana, sans-serif';
+      const baseSize = config.font_size || defaultConfig.font_size;
+
+      document.body.style.fontFamily = `${customFont}, ${baseFontStack}`;
+      document.body.style.fontSize = `${baseSize}px`;
+      document.body.style.backgroundColor = config.background_color || defaultConfig.background_color;
+      document.body.style.color = config.text_color || defaultConfig.text_color;
+
+      document.getElementById('app-title').textContent = config.app_title || defaultConfig.app_title;
+      document.getElementById('tagline').textContent = config.tagline || defaultConfig.tagline;
+      document.getElementById('cta-button').textContent = config.cta_button || defaultConfig.cta_button;
+      document.getElementById('footer-text').textContent = config.footer_text || defaultConfig.footer_text;
+
+      const surfaces = document.querySelectorAll('.bg-white');
+      surfaces.forEach(el => {
+        el.style.backgroundColor = config.surface_color || defaultConfig.surface_color;
+      });
+
+      const primaryButtons = document.querySelectorAll('.bg-purple-600, .bg-green-500, .bg-yellow-500, .bg-red-500');
+      primaryButtons.forEach(el => {
+        el.style.backgroundColor = config.primary_action_color || defaultConfig.primary_action_color;
+      });
+
+      const headers = document.querySelectorAll('h1, h2, h3, h4');
+      headers.forEach(el => {
+        el.style.fontSize = `${baseSize * 1.5}px`;
+      });
+    }
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities: (config) => ({
+          recolorables: [
+            {
+              get: () => config.background_color || defaultConfig.background_color,
+              set: (value) => {
+                config.background_color = value;
+                window.elementSdk.setConfig({ background_color: value });
+              }
+            },
+            {
+              get: () => config.surface_color || defaultConfig.surface_color,
+              set: (value) => {
+                config.surface_color = value;
+                window.elementSdk.setConfig({ surface_color: value });
+              }
+            },
+            {
+              get: () => config.text_color || defaultConfig.text_color,
+              set: (value) => {
+                config.text_color = value;
+                window.elementSdk.setConfig({ text_color: value });
+              }
+            },
+            {
+              get: () => config.primary_action_color || defaultConfig.primary_action_color,
+              set: (value) => {
+                config.primary_action_color = value;
+                window.elementSdk.setConfig({ primary_action_color: value });
+              }
+            },
+            {
+              get: () => config.secondary_action_color || defaultConfig.secondary_action_color,
+              set: (value) => {
+                config.secondary_action_color = value;
+                window.elementSdk.setConfig({ secondary_action_color: value });
+              }
+            }
+          ],
+          borderables: [],
+          fontEditable: {
+            get: () => config.font_family || defaultConfig.font_family,
+            set: (value) => {
+              config.font_family = value;
+              window.elementSdk.setConfig({ font_family: value });
+            }
+          },
+          fontSizeable: {
+            get: () => config.font_size || defaultConfig.font_size,
+            set: (value) => {
+              config.font_size = value;
+              window.elementSdk.setConfig({ font_size: value });
+            }
+          }
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ["app_title", config.app_title || defaultConfig.app_title],
+          ["tagline", config.tagline || defaultConfig.tagline],
+          ["cta_button", config.cta_button || defaultConfig.cta_button],
+          ["footer_text", config.footer_text || defaultConfig.footer_text]
+        ])
+      });
+    }
+
+    function showSection(section) {
+      const sections = ['home', 'materi', 'kalkulator', 'latihan', 'statistik'];
+      sections.forEach(s => {
+        const el = document.getElementById(`${s}-section`);
+        if (el) {
+          el.classList.add('hidden');
+        }
+      });
+      
+      const targetSection = document.getElementById(`${section}-section`);
+      if (targetSection) {
+        targetSection.classList.remove('hidden');
+        targetSection.classList.add('fade-in');
+      }
+
+      const mobileMenu = document.getElementById('mobile-menu');
+      if (mobileMenu) {
+        mobileMenu.classList.add('hidden');
+      }
+    }
+
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobile-menu');
+      menu.classList.toggle('hidden');
+    }
+
+    function toggleExplanation(method) {
+      const methods = ['eliminasi', 'substitusi', 'campuran'];
+      methods.forEach(m => {
+        const el = document.getElementById(`explanation-${m}`);
+        if (el) {
+          if (m === method) {
+            el.classList.toggle('hidden');
+          } else {
+            el.classList.add('hidden');
+          }
+        }
+      });
+    }
+
+    let currentCalcData = null;
+
+    function showMethodSteps(method) {
+      if (!currentCalcData) return;
+      
+      const stepsDiv = document.getElementById('solution-steps');
+      const titleDiv = document.getElementById('method-title');
+      const contentDiv = document.getElementById('steps-content');
+      
+      const { a1, b1, c1, d1, a2, b2, c2, d2, a3, b3, c3, d3, x, y, z } = currentCalcData;
+      
+      if (method === 'eliminasi') {
+        titleDiv.textContent = '📝 Langkah-langkah Penyelesaian (Metode Eliminasi):';
+        contentDiv.innerHTML = generateEliminasiSteps(a1, b1, c1, d1, a2, b2, c2, d2, a3, b3, c3, d3, x, y, z);
+      } else if (method === 'substitusi') {
+        titleDiv.textContent = '🔄 Langkah-langkah Penyelesaian (Metode Substitusi):';
+        contentDiv.innerHTML = generateSubstitusiSteps(a1, b1, c1, d1, a2, b2, c2, d2, a3, b3, c3, d3, x, y, z);
+      } else if (method === 'campuran') {
+        titleDiv.textContent = '🎯 Langkah-langkah Penyelesaian (Metode Campuran):';
+        contentDiv.innerHTML = generateCampuranSteps(a1, b1, c1, d1, a2, b2, c2, d2, a3, b3, c3, d3, x, y, z);
+      }
+      
+      stepsDiv.classList.remove('hidden');
+    }
+
+    function generateEliminasiSteps(a1, b1, c1, d1, a2, b2, c2, d2, a3, b3, c3, d3, x, y, z) {
+      const eq4_a = a1 + a2;
+      const eq4_b = b1 + b2;
+      const eq4_d = d1 + d2;
+      
+      const eq5_a = a2 + a3;
+      const eq5_b = b2 + b3;
+      const eq5_d = d2 + d3;
+      
+      return `
+        <div class="bg-purple-50 p-3 rounded">
+          <strong>Langkah 1: Eliminasi z dari persamaan (1) dan (2)</strong>
+          <div class="ml-4 mt-2 font-mono text-xs">
+            <p>${a1}x + ${b1}y + ${c1}z = ${d1} ... (1)</p>
+            <p>${a2}x + ${b2}y + ${c2}z = ${d2} ... (2)</p>
+            <p class="text-gray-600 mt-1">Samakan koefisien z, lalu jumlahkan atau kurangkan</p>
+            <p class="border-t border-gray-300 mt-2 pt-1 text-green-700 font-bold">${eq4_a}x + ${eq4_b}y = ${eq4_d} ... (4)</p>
+          </div>
+        </div>
+        
+        <div class="bg-blue-50 p-3 rounded">
+          <strong>Langkah 2: Eliminasi z dari persamaan (2) dan (3)</strong>
+          <div class="ml-4 mt-2 font-mono text-xs">
+            <p>${a2}x + ${b2}y + ${c2}z = ${d2} ... (2)</p>
+            <p>${a3}x + ${b3}y + ${c3}z = ${d3} ... (3)</p>
+            <p class="text-gray-600 mt-1">Samakan koefisien z, lalu jumlahkan atau kurangkan</p>
+            <p class="border-t border-gray-300 mt-2 pt-1 text-green-700 font-bold">${eq5_a}x + ${eq5_b}y = ${eq5_d} ... (5)</p>
+          </div>
+        </div>
+        
+        <div class="bg-green-50 p-3 rounded">
+          <strong>Langkah 3: Eliminasi y dari persamaan (4) dan (5)</strong>
+          <div class="ml-4 mt-2 font-mono text-xs">
+            <p>${eq4_a}x + ${eq4_b}y = ${eq4_d}</p>
+            <p>${eq5_a}x + ${eq5_b}y = ${eq5_d}</p>
+            <p class="text-gray-600 mt-1">Samakan koefisien y, lalu kurangkan</p>
+            <p class="border-t border-gray-300 mt-2 pt-1 text-green-700 font-bold">x = ${x.toFixed(2)}</p>
+          </div>
+        </div>
+        
+        <div class="bg-yellow-50 p-3 rounded">
+          <strong>Langkah 4: Substitusi x ke persamaan (4) untuk mendapat y</strong>
+          <div class="ml-4 mt-2 font-mono text-xs">
+            <p>${eq4_a}(${x.toFixed(2)}) + ${eq4_b}y = ${eq4_d}</p>
+            <p class="text-green-700 font-bold">y = ${y.toFixed(2)}</p>
+          </div>
+        </div>
+        
+        <div class="bg-pink-50 p-3 rounded">
+          <strong>Langkah 5: Substitusi x dan y ke persamaan (1) untuk mendapat z</strong>
+          <div class="ml-4 mt-2 font-mono text-xs">
+            <p>${a1}(${x.toFixed(2)}) + ${b1}(${y.toFixed(2)}) + ${c1}z = ${d1}</p>
+            <p class="text-green-700 font-bold">z = ${z.toFixed(2)}</p>
+          </div>
+        </div>
+        
+        <div class="bg-green-100 p-4 rounded border-2 border-green-500">
+          <strong class="text-lg">✅ Kesimpulan:</strong>
+          <p class="mt-2 font-mono text-base">x = ${x.toFixed(2)}, y = ${y.toFixed(2)}, z = ${z.toFixed(2)}</p>
+        </div>
+      `;
+    }
+
+    function generateSubstitusiSteps(a1, b1, c1, d1, a2, b2, c2, d2, a3, b3, c3, d3, x, y, z) {
+      return `
+        <div class="bg-purple-50 p-3 rounded">
+          <strong>Langkah 1: Dari persamaan (2), nyatakan x dalam y dan z</strong>
+          <div class="ml-4 mt-2 font-mono text-xs">
+            <p>${a2}x + ${b2}y + ${c2}z = ${d2}</p>
+            <p class="text-green-700 font-bold">x = (${d2} - ${b2}y - ${c2}z) / ${a2} ... (4)</p>
+          </div>
+        </div>
+        
+        <div class="bg-blue-50 p-3 rounded">
+          <strong>Langkah 2: Substitusi (4) ke persamaan (1)</strong>
+          <div class="ml-4 mt-2 font-mono text-xs">
+            <p>${a1}((${d2} - ${b2}y - ${c2}z) / ${a2}) + ${b1}y + ${c1}z = ${d1}</p>
+            <p class="text-gray-600 mt-1">Sederhanakan untuk mendapat hubungan y dan z</p>
+            <p class="text-green-700 font-bold">Persamaan baru dalam y dan z ... (5)</p>
+          </div>
+        </div>
+        
+        <div class="bg-green-50 p-3 rounded">
+          <strong>Langkah 3: Substitusi (4) ke persamaan (3)</strong>
+          <div class="ml-4 mt-2 font-mono text-xs">
+            <p>${a3}((${d2} - ${b2}y - ${c2}z) / ${a2}) + ${b3}y + ${c3}z = ${d3}</p>
+            <p class="text-gray-600 mt-1">Sederhanakan untuk mendapat hubungan y dan z</p>
+            <p class="text-green-700 font-bold">Persamaan baru dalam y dan z ... (6)</p>
+          </div>
+        </div>
+        
+        <div class="bg-yellow-50 p-3 rounded">
+          <strong>Langkah 4: Selesaikan persamaan (5) dan (6)</strong>
+          <div class="ml-4 mt-2 font-mono text-xs">
+            <p>Dari (5) dan (6), nyatakan y dalam z, lalu substitusi</p>
+            <p class="text-green-700 font-bold">z = ${z.toFixed(2)}</p>
+            <p class="text-green-700 font-bold">y = ${y.toFixed(2)}</p>
+          </div>
+        </div>
+        
+        <div class="bg-pink-50 p-3 rounded">
+          <strong>Langkah 5: Substitusi y dan z ke persamaan (4)</strong>
+          <div class="ml-4 mt-2 font-mono text-xs">
+            <p>x = (${d2} - ${b2}(${y.toFixed(2)}) - ${c2}(${z.toFixed(2)})) / ${a2}</p>
+            <p class="text-green-700 font-bold">x = ${x.toFixed(2)}</p>
+          </div>
+        </div>
+        
+        <div class="bg-green-100 p-4 rounded border-2 border-green-500">
+          <strong class="text-lg">✅ Kesimpulan:</strong>
+          <p class="mt-2 font-mono text-base">x = ${x.toFixed(2)}, y = ${y.toFixed(2)}, z = ${z.toFixed(2)}</p>
+        </div>
+      `;
+    }
+
+    function generateCampuranSteps(a1, b1, c1, d1, a2, b2, c2, d2, a3, b3, c3, d3, x, y, z) {
+      const eq4_a = a1 + a2;
+      const eq4_c = c1 + c2;
+      const eq4_d = d1 + d2;
+      
+      return `
+        <div class="bg-purple-50 p-3 rounded">
+          <strong>Langkah 1: Eliminasi y dari persamaan (1) dan (2)</strong>
+          <div class="ml-4 mt-2 font-mono text-xs">
+            <p>${a1}x + ${b1}y + ${c1}z = ${d1}</p>
+            <p>${a2}x + ${b2}y + ${c2}z = ${d2}</p>
+            <p class="text-gray-600 mt-1">Samakan koefisien y, lalu jumlahkan atau kurangkan</p>
+            <p class="border-t border-gray-300 mt-2 pt-1 text-green-700 font-bold">${eq4_a}x + ${eq4_c}z = ${eq4_d} ... (4)</p>
+          </div>
+        </div>
+        
+        <div class="bg-blue-50 p-3 rounded">
+          <strong>Langkah 2: Eliminasi y dari persamaan (1) dan (3)</strong>
+          <div class="ml-4 mt-2 font-mono text-xs">
+            <p>${a1}x + ${b1}y + ${c1}z = ${d1}</p>
+            <p>${a3}x + ${b3}y + ${c3}z = ${d3}</p>
+            <p class="text-gray-600 mt-1">Samakan koefisien y, lalu kurangkan</p>
+            <p class="border-t border-gray-300 mt-2 pt-1 text-green-700 font-bold">Persamaan baru dalam x dan z ... (5)</p>
+          </div>
+        </div>
+        
+        <div class="bg-green-50 p-3 rounded">
+          <strong>Langkah 3: Dari (5), nyatakan x dalam z (Substitusi)</strong>
+          <div class="ml-4 mt-2 font-mono text-xs">
+            <p class="text-green-700 font-bold">x = f(z) ... (6)</p>
+          </div>
+        </div>
+        
+        <div class="bg-yellow-50 p-3 rounded">
+          <strong>Langkah 4: Substitusi (6) ke (4)</strong>
+          <div class="ml-4 mt-2 font-mono text-xs">
+            <p>${eq4_a}(f(z)) + ${eq4_c}z = ${eq4_d}</p>
+            <p class="text-gray-600 mt-1">Selesaikan untuk mendapat z</p>
+            <p class="text-green-700 font-bold">z = ${z.toFixed(2)}</p>
+          </div>
+        </div>
+        
+        <div class="bg-pink-50 p-3 rounded">
+          <strong>Langkah 5: Substitusi z ke (6) dan persamaan (1)</strong>
+          <div class="ml-4 mt-2 font-mono text-xs">
+            <p>x = f(${z.toFixed(2)}) → <span class="text-green-700 font-bold">x = ${x.toFixed(2)}</span></p>
+            <p>${a1}(${x.toFixed(2)}) + ${b1}y + ${c1}(${z.toFixed(2)}) = ${d1}</p>
+            <p class="text-green-700 font-bold">y = ${y.toFixed(2)}</p>
+          </div>
+        </div>
+        
+        <div class="bg-green-100 p-4 rounded border-2 border-green-500">
+          <strong class="text-lg">✅ Kesimpulan:</strong>
+          <p class="mt-2 font-mono text-base">x = ${x.toFixed(2)}, y = ${y.toFixed(2)}, z = ${z.toFixed(2)}</p>
+        </div>
+      `;
+    }
+
+    function calculateSPLTV() {
+      const a1 = parseFloat(document.getElementById('a1').value) || 0;
+      const b1 = parseFloat(document.getElementById('b1').value) || 0;
+      const c1 = parseFloat(document.getElementById('c1').value) || 0;
+      const d1 = parseFloat(document.getElementById('d1').value) || 0;
+      
+      const a2 = parseFloat(document.getElementById('a2').value) || 0;
+      const b2 = parseFloat(document.getElementById('b2').value) || 0;
+      const c2 = parseFloat(document.getElementById('c2').value) || 0;
+      const d2 = parseFloat(document.getElementById('d2').value) || 0;
+      
+      const a3 = parseFloat(document.getElementById('a3').value) || 0;
+      const b3 = parseFloat(document.getElementById('b3').value) || 0;
+      const c3 = parseFloat(document.getElementById('c3').value) || 0;
+      const d3 = parseFloat(document.getElementById('d3').value) || 0;
+
+      const det = a1 * (b2 * c3 - b3 * c2) - b1 * (a2 * c3 - a3 * c2) + c1 * (a2 * b3 - a3 * b2);
+
+      if (Math.abs(det) < 0.0001) {
+        document.getElementById('calc-result').classList.add('hidden');
+        document.getElementById('calc-error').classList.remove('hidden');
+        document.getElementById('error-message').textContent = 'Sistem persamaan tidak memiliki solusi unik atau tidak konsisten.';
+        return;
+      }
+
+      const detX = d1 * (b2 * c3 - b3 * c2) - b1 * (d2 * c3 - d3 * c2) + c1 * (d2 * b3 - d3 * b2);
+      const detY = a1 * (d2 * c3 - d3 * c2) - d1 * (a2 * c3 - a3 * c2) + c1 * (a2 * d3 - a3 * d2);
+      const detZ = a1 * (b2 * d3 - b3 * d2) - b1 * (a2 * d3 - a3 * d2) + d1 * (a2 * b3 - a3 * b2);
+
+      const x = detX / det;
+      const y = detY / det;
+      const z = detZ / det;
+
+      currentCalcData = { a1, b1, c1, d1, a2, b2, c2, d2, a3, b3, c3, d3, x, y, z };
+
+      document.getElementById('result-x').textContent = x.toFixed(2);
+      document.getElementById('result-y').textContent = y.toFixed(2);
+      document.getElementById('result-z').textContent = z.toFixed(2);
+
+      document.getElementById('calc-error').classList.add('hidden');
+      document.getElementById('calc-result').classList.remove('hidden');
+      document.getElementById('solution-steps').classList.add('hidden');
+    }
+
+    function generateQuestion(difficulty) {
+      let range;
+      if (difficulty === 'mudah') range = 5;
+      else if (difficulty === 'sedang') range = 10;
+      else range = 20;
+
+      const a1 = Math.floor(Math.random() * range) + 1;
+      const b1 = Math.floor(Math.random() * range) + 1;
+      const c1 = Math.floor(Math.random() * range) + 1;
+      
+      const a2 = Math.floor(Math.random() * range) + 1;
+      const b2 = Math.floor(Math.random() * range) + 1;
+      const c2 = Math.floor(Math.random() * range) + 1;
+      
+      const a3 = Math.floor(Math.random() * range) + 1;
+      const b3 = Math.floor(Math.random() * range) + 1;
+      const c3 = Math.floor(Math.random() * range) + 1;
+
+      const x = Math.floor(Math.random() * 5) + 1;
+      const y = Math.floor(Math.random() * 5) + 1;
+      const z = Math.floor(Math.random() * 5) + 1;
+
+      const d1 = a1 * x + b1 * y + c1 * z;
+      const d2 = a2 * x + b2 * y + c2 * z;
+      const d3 = a3 * x + b3 * y + c3 * z;
+
+      return {
+        equations: [
+          { a: a1, b: b1, c: c1, d: d1 },
+          { a: a2, b: b2, c: c2, d: d2 },
+          { a: a3, b: b3, c: c3, d: d3 }
+        ],
+        solution: { x, y, z }
+      };
+    }
+
+    function startQuiz(difficulty) {
+      currentDifficulty = difficulty;
+      currentQuestionIndex = 0;
+      quizAnswers = [];
+      
+      currentQuizData = [];
+      for (let i = 0; i < 5; i++) {
+        currentQuizData.push(generateQuestion(difficulty));
+      }
+
+      document.getElementById('quiz-container').classList.remove('hidden');
+      displayQuestion();
+
+      const badges = {
+        'mudah': '😊 Mudah',
+        'sedang': '🤔 Sedang',
+        'sulit': '🔥 Sulit'
+      };
+      document.getElementById('quiz-difficulty-badge').textContent = badges[difficulty];
+    }
+
+    function displayQuestion() {
+      const question = currentQuizData[currentQuestionIndex];
+      const questionDiv = document.getElementById('quiz-question');
+      
+      questionDiv.innerHTML = `
+        <p class="font-mono">${question.equations[0].a}x + ${question.equations[0].b}y + ${question.equations[0].c}z = ${question.equations[0].d}</p>
+        <p class="font-mono">${question.equations[1].a}x + ${question.equations[1].b}y + ${question.equations[1].c}z = ${question.equations[1].d}</p>
+        <p class="font-mono">${question.equations[2].a}x + ${question.equations[2].b}y + ${question.equations[2].c}z = ${question.equations[2].d}</p>
+      `;
+
+      document.getElementById('current-question').textContent = currentQuestionIndex + 1;
+      document.getElementById('answer-x').value = '';
+      document.getElementById('answer-y').value = '';
+      document.getElementById('answer-z').value = '';
+      document.getElementById('answer-feedback').classList.add('hidden');
+    }
+
+    function checkAnswer() {
+      const userX = parseFloat(document.getElementById('answer-x').value);
+      const userY = parseFloat(document.getElementById('answer-y').value);
+      const userZ = parseFloat(document.getElementById('answer-z').value);
+
+      const question = currentQuizData[currentQuestionIndex];
+      const correctX = question.solution.x;
+      const correctY = question.solution.y;
+      const correctZ = question.solution.z;
+
+      const isCorrect = Math.abs(userX - correctX) < 0.1 && 
+                       Math.abs(userY - correctY) < 0.1 && 
+                       Math.abs(userZ - correctZ) < 0.1;
+
+      quizAnswers.push({
+        correct: isCorrect,
+        userAnswer: { x: userX, y: userY, z: userZ },
+        correctAnswer: { x: correctX, y: correctY, z: correctZ }
+      });
+
+      const feedbackDiv = document.getElementById('answer-feedback');
+      if (isCorrect) {
+        feedbackDiv.innerHTML = `
+          <div class="bg-green-100 border-l-4 border-green-500 p-4 rounded">
+            <p class="font-bold text-green-800">✅ Benar!</p>
+            <p class="text-green-700">Jawabanmu tepat! x = ${correctX}, y = ${correctY}, z = ${correctZ}</p>
+          </div>
+        `;
+      } else {
+        feedbackDiv.innerHTML = `
+          <div class="bg-red-100 border-l-4 border-red-500 p-4 rounded">
+            <p class="font-bold text-red-800">❌ Kurang Tepat</p>
+            <p class="text-red-700">Jawaban yang benar: x = ${correctX}, y = ${correctY}, z = ${correctZ}</p>
+            <p class="text-red-600 text-sm mt-2">Coba periksa kembali langkah perhitunganmu!</p>
+          </div>
+        `;
+      }
+      feedbackDiv.classList.remove('hidden');
+
+      if (currentQuestionIndex < 4) {
+        setTimeout(() => {
+          currentQuestionIndex++;
+          displayQuestion();
+        }, 2500);
+      } else {
+        setTimeout(() => {
+          finishQuiz();
+        }, 2500);
+      }
+    }
+
+    async function finishQuiz() {
+      const correctCount = quizAnswers.filter(a => a.correct).length;
+      const score = (correctCount / 5) * 100;
+
+      const submitBtn = document.getElementById('submit-answer-btn');
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = 'Menyimpan hasil...<span class="loading-spinner"></span>';
+
+      const result = await window.dataSdk.create({
+        id: Date.now().toString(),
+        quiz_score: score,
+        quiz_difficulty: currentDifficulty,
+        completed_at: new Date().toISOString(),
+        correct_answers: correctCount,
+        total_questions: 5
+      });
+
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = 'Cek Jawaban';
+
+      if (result.isOk) {
+        const feedbackDiv = document.getElementById('answer-feedback');
+        feedbackDiv.innerHTML = `
+          <div class="bg-blue-100 border-l-4 border-blue-500 p-6 rounded">
+            <p class="font-bold text-blue-800 text-xl mb-2">🎉 Kuis Selesai!</p>
+            <p class="text-blue-700 text-lg">Skor kamu: ${score}%</p>
+            <p class="text-blue-600">Jawaban benar: ${correctCount} dari 5</p>
+            <button onclick="showSection('statistik')" class="mt-4 bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">
+              Lihat Statistik
+            </button>
+          </div>
+        `;
+      } else {
+        const feedbackDiv = document.getElementById('answer-feedback');
+        feedbackDiv.innerHTML = `
+          <div class="bg-red-100 border-l-4 border-red-500 p-4 rounded">
+            <p class="font-bold text-red-800">Error menyimpan hasil</p>
+            <p class="text-red-700">Skor kamu: ${score}% (${correctCount}/5 benar)</p>
+          </div>
+        `;
+      }
+    }
+
+    function updateStatistics(data) {
+      const totalQuizzes = data.length;
+      const totalCorrect = data.reduce((sum, quiz) => sum + quiz.correct_answers, 0);
+      const avgScore = totalQuizzes > 0 
+        ? (data.reduce((sum, quiz) => sum + quiz.quiz_score, 0) / totalQuizzes).toFixed(1)
+        : 0;
+
+      document.getElementById('total-quizzes').textContent = totalQuizzes;
+      document.getElementById('avg-score').textContent = avgScore + '%';
+      document.getElementById('total-correct').textContent = totalCorrect;
+
+      const historyDiv = document.getElementById('quiz-history');
+      if (data.length === 0) {
+        historyDiv.innerHTML = '<p class="text-gray-500 text-center py-8">Belum ada riwayat latihan. Mulai berlatih sekarang!</p>';
+      } else {
+        const sortedData = [...data].sort((a, b) => new Date(b.completed_at) - new Date(a.completed_at));
+        historyDiv.innerHTML = sortedData.map(quiz => {
+          const date = new Date(quiz.completed_at);
+          const difficultyBadges = {
+            'mudah': 'bg-green-100 text-green-800',
+            'sedang': 'bg-yellow-100 text-yellow-800',
+            'sulit': 'bg-red-100 text-red-800'
+          };
+          return `
+            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+              <div>
+                <span class="px-3 py-1 rounded-full text-sm font-semibold ${difficultyBadges[quiz.quiz_difficulty]}">${quiz.quiz_difficulty}</span>
+                <span class="ml-3 text-gray-600 text-sm">${date.toLocaleDateString('id-ID')}</span>
+              </div>
+              <div class="text-right">
+                <p class="font-bold text-lg">${quiz.quiz_score}%</p>
+                <p class="text-sm text-gray-600">${quiz.correct_answers}/5 benar</p>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+    }
+
+    async function resetStatistics() {
+      const confirmDiv = document.createElement('div');
+      confirmDiv.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+      confirmDiv.innerHTML = `
+        <div class="bg-white rounded-xl p-6 max-w-md mx-4">
+          <h3 class="text-xl font-bold text-gray-800 mb-4">⚠️ Konfirmasi Reset</h3>
+          <p class="text-gray-700 mb-6">Apakah kamu yakin ingin menghapus semua riwayat latihan? Tindakan ini tidak dapat dibatalkan.</p>
+          <div class="flex gap-3">
+            <button onclick="cancelReset()" class="flex-1 bg-gray-300 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-400 transition font-semibold">
+              Batal
+            </button>
+            <button onclick="confirmReset()" class="flex-1 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition font-semibold">
+              Ya, Hapus Semua
+            </button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(confirmDiv);
+      window.currentConfirmDiv = confirmDiv;
+    }
+
+    function cancelReset() {
+      if (window.currentConfirmDiv) {
+        document.body.removeChild(window.currentConfirmDiv);
+        window.currentConfirmDiv = null;
+      }
+    }
+
+    async function confirmReset() {
+      const resetBtn = document.getElementById('reset-btn');
+      resetBtn.disabled = true;
+      resetBtn.innerHTML = 'Menghapus...<span class="loading-spinner"></span>';
+
+      const deletePromises = allQuizData.map(quiz => window.dataSdk.delete(quiz));
+      await Promise.all(deletePromises);
+
+      resetBtn.disabled = false;
+      resetBtn.innerHTML = '🗑️ Reset Riwayat';
+
+      if (window.currentConfirmDiv) {
+        document.body.removeChild(window.currentConfirmDiv);
+        window.currentConfirmDiv = null;
+      }
+    }
+
+    initApp();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a00f13076fce141',t:'MTc2MzQwMDQ4MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
